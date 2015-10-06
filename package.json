@@ -35,6 +35,9 @@
   "dependencies": {
     "deepmerge": "^0.2.10"
   },
+  "peerDependencies": {
+    "falcor": "^0.1.13"
+  },
   "devDependencies": {
     "babel": "^5.8.23",
     "babel-core": "^5.8.25",
