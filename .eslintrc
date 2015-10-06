@@ -1,0 +1,10 @@
+{
+  "extends": "airbnb/base",
+  "env": {
+    "browser": true,
+    "mocha": true
+  },
+  "rules": {
+    "valid-jsdoc": 2
+  }
+}

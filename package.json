@@ -1,0 +1,50 @@
+{
+  "name": "redux-falcor",
+  "version": "1.0.0",
+  "description": "A helper library for integratig Redux & Falcor",
+  "main": "index.js",
+  "scripts": {
+    "clean": "$(npm bin)/rimraf dist",
+    "lint": "$(npm bin)/eslint src test",
+    "test": "$(npm bin)/mocha --compilers js:babel/register --recursive",
+    "test:watch": "npm test -- --watch",
+    "check": "npm run lint && npm run test",
+    "build:lib": "babel src --out-dir lib",
+    "build:umd": "webpack src/index.js dist/falcorRedux.js --config webpack.config.js",
+    "build": "npm run build:lib && npm run build:umd",
+    "preversion": "npm run clean && npm run check",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags && npm run clean",
+    "prepublish": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ekosz/redux-falcor.git"
+  },
+  "keywords": [
+    "redux",
+    "falcor"
+  ],
+  "author": "Eric Koslow <ekoslow@gmail.com> (https://github.com/ekosz)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ekosz/redux-falcor/issues"
+  },
+  "homepage": "https://github.com/ekosz/redux-falcor#readme",
+  "dependencies": {
+    "deepmerge": "^0.2.10"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babel-core": "^5.8.25",
+    "babel-eslint": "^4.1.3",
+    "babel-loader": "^5.3.2",
+    "eslint": "^1.6.0",
+    "eslint-config-airbnb": "^0.1.0",
+    "expect": "^1.11.1",
+    "falcor": "^0.1.13",
+    "mocha": "^2.3.3",
+    "rimraf": "^2.4.3",
+    "webpack": "^1.12.2"
+  }
+}
