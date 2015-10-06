@@ -66,7 +66,7 @@ store.dispatch(retrievePath('usersById[35]["email"]');
 While its not suggested, you can also hook into the Falcor promise directly if
 you need to. For example:
 
-```
+```js
 import { retrieveValue } from 'redux-falcor';
 
 store.dispatch(retrieveValue('usersById[35]["email"]').then((email) => {
