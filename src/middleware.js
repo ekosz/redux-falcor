@@ -1,11 +1,16 @@
 import { RETRIEVE_PATH, RETRIEVE_VALUE } from './actions';
 
+function UnreconizedActionTypeException(message) {
+  this.message = message;
+  this.name = 'UnreconizedActionTypeException';
+}
+
 export default function createFalcorMiddleware(falcor) {
   return function falcorMiddleware() {
     return next => action => {
       const { falcorPath, type, ...rest } = action;
 
-      if (type !== RETRIEVE_PATH && type !== RETRIEVE_VALUE) {
+      if (!falcorPath) {
         return next(action);
       }
 
@@ -17,10 +22,15 @@ export default function createFalcorMiddleware(falcor) {
 
       let promise;
 
-      if (type === RETRIEVE_PATH) {
+      switch (type) {
+      case RETRIEVE_PATH:
         promise = falcor.get(falcorPath);
-      } else {
+        break;
+      case RETRIEVE_VALUE:
         promise = falcor.getValue(falcorPath);
+        break;
+      default:
+        throw new UnreconizedActionTypeException('Do not know the action, ' + type);
       }
 
       return promise
