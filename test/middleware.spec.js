@@ -1,6 +1,6 @@
 import { Model } from 'falcor';
 import expect from 'expect';
-import { retrievePath, retrieveValue } from '../src/actions';
+import { retrievePath, retrieveValue, setPath } from '../src/actions';
 import createFalcorMiddleware from '../src/middleware';
 
 describe('createFalcorMiddleware', () => {
@@ -107,6 +107,39 @@ describe('createFalcorMiddleware', () => {
           type: 'FALCOR_RETRIEVE_VALUE',
           path: 'my["email"]',
           res: 'foo@bar.com',
+        });
+      });
+    });
+
+    describe('setPath', () => {
+      it('updates falcor', async () => {
+        cache = {
+          my: {
+            email: 'foo@bar.com',
+          },
+        };
+
+        await dispatch(setPath('my["email"]', 'baz@bar.com'));
+
+        expect(baseDispatch.calls.length).toEqual(2);
+
+        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+          type: 'FALCOR_SET_PATH_REQUEST',
+          path: 'my["email"]',
+          value: 'baz@bar.com',
+        });
+
+        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+          type: 'FALCOR_SET_PATH',
+          path: 'my["email"]',
+          value: 'baz@bar.com',
+          res: {
+            json: {
+              my: {
+                email: 'baz@bar.com',
+              },
+            },
+          },
         });
       });
     });
