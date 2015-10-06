@@ -52,6 +52,38 @@ describe('createFalcorMiddleware', () => {
           },
         });
       });
+
+      it('expands references', async () => {
+        cache = {
+          my: { $type: 'ref', value: ['usersById', 35] },
+          usersById: {
+            35: {
+              email: 'foo@bar.com',
+            },
+          },
+        };
+
+        await dispatch(retrievePath('my["email"]'));
+
+        expect(baseDispatch.calls.length).toEqual(2);
+
+        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+          type: 'FALCOR_RETRIEVE_PATH_REQUEST',
+          path: 'my["email"]',
+        });
+
+        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+          type: 'FALCOR_RETRIEVE_PATH',
+          path: 'my["email"]',
+          res: {
+            json: {
+              my: {
+                email: 'foo@bar.com',
+              },
+            },
+          },
+        });
+      });
     });
 
     describe('retrieveValue', () => {
