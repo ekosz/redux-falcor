@@ -2,9 +2,10 @@
   "name": "redux-falcor",
   "version": "1.0.0",
   "description": "A helper library for integratig Redux & Falcor",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "jsnext:main": "src/index.js",
   "scripts": {
-    "clean": "$(npm bin)/rimraf dist",
+    "clean": "$(npm bin)/rimraf lib dist",
     "lint": "$(npm bin)/eslint src test",
     "test": "$(npm bin)/mocha --compilers js:babel/register --recursive",
     "test:watch": "npm test -- --watch",
@@ -46,5 +47,13 @@
     "mocha": "^2.3.3",
     "rimraf": "^2.4.3",
     "webpack": "^1.12.2"
-  }
+  },
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ]
 }
