@@ -1,4 +1,9 @@
-import { RETRIEVE_PATH, RETRIEVE_VALUE, SET_PATH } from './actions';
+import {
+  RETRIEVE_PATH,
+  RETRIEVE_VALUE,
+  SET_PATH,
+  RETRIEVE_PATHS,
+} from './actions';
 
 function UnreconizedActionTypeException(message) {
   this.message = message;
@@ -25,6 +30,9 @@ export default function createFalcorMiddleware(falcor) {
       switch (type) {
       case RETRIEVE_PATH:
         promise = falcor.get(falcorPath);
+        break;
+      case RETRIEVE_PATHS:
+        promise = falcor.get.apply(falcor, falcorPath);
         break;
       case RETRIEVE_VALUE:
         promise = falcor.getValue(falcorPath);

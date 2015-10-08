@@ -1,6 +1,11 @@
 import { Model } from 'falcor';
 import expect from 'expect';
-import { retrievePath, retrieveValue, setPath } from '../src/actions';
+import {
+  retrievePath,
+  retrieveValue,
+  setPath,
+  retrievePaths,
+} from '../src/actions';
 import createFalcorMiddleware from '../src/middleware';
 
 describe('createFalcorMiddleware', () => {
@@ -139,6 +144,36 @@ describe('createFalcorMiddleware', () => {
                 email: 'baz@bar.com',
               },
             },
+          },
+        });
+      });
+    });
+
+    describe('retrievePaths', () => {
+      it('gets data from falcor', async () => {
+        cache = {
+          my: {
+            email: 'foo@bar.com',
+          },
+          users: {
+            length: 1,
+          },
+        };
+
+        await dispatch(retrievePaths('my["email"]', 'users["length"]'));
+
+        expect(baseDispatch.calls.length).toEqual(2);
+
+        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+          type: 'FALCOR_RETRIEVE_PATHS_REQUEST',
+          paths: ['my["email"]', 'users["length"]'],
+        });
+
+        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+          type: 'FALCOR_RETRIEVE_PATHS',
+          paths: ['my["email"]', 'users["length"]'],
+          res: {
+            json: cache,
           },
         });
       });
