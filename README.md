@@ -35,9 +35,8 @@ const falcor = new Model({
 });
 
 const finalCreateStore = compose(
-  applyMiddleware(createFalcorMiddleware(falcor)),
-  createStore
-);
+  applyMiddleware(createFalcorMiddleware(falcor))
+)(createStore);
 
 const store = finalCreateStore(reducer);
 ```
