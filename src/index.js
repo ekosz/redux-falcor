@@ -3,6 +3,7 @@ import {
   retrievePaths,
   retrieveValue,
   setPath,
+  callPath,
 } from './actions';
 import createFalcorMiddleware from './middleware';
 import falcorReducer from './reducer';
@@ -12,6 +13,7 @@ export {
   retrievePaths,
   retrieveValue,
   setPath,
+  callPath,
   createFalcorMiddleware,
   falcorReducer,
 };

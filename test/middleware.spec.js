@@ -1,10 +1,12 @@
 import { Model } from 'falcor';
+import Router from 'falcor-router';
 import expect from 'expect';
 import {
   retrievePath,
   retrieveValue,
   setPath,
   retrievePaths,
+  callPath,
 } from '../src/actions';
 import createFalcorMiddleware from '../src/middleware';
 
@@ -174,6 +176,60 @@ describe('createFalcorMiddleware', () => {
           paths: ['my["email"]', 'users["length"]'],
           res: {
             json: cache,
+          },
+        });
+      });
+    });
+
+    describe('callPath', () => {
+      it('passes its arguments to falcor properly', async () => {
+        const router = new Router([{
+          route: 'users.add',
+          call: (path, args, refPaths, thisPaths) => {
+            expect(path).toEqual(['users', 'add']);
+            expect(args).toEqual([{email: 'foo@bar.com', name: 'Baz'}]);
+            expect(refPaths).toEqual([['name']]);
+            expect(thisPaths).toEqual([]);
+
+            return [
+              { path: ['users', 1], value: { $type: 'ref', value: ['usersById', 99] } },
+            ];
+          },
+        }, {
+          route: 'usersById[99].name',
+          get: () => [{ path: ['usersById', 99, 'name'], value: 'Baz' }],
+        }]);
+
+        createFalcor = () => new Model({source: router});
+
+        await dispatch(
+          callPath('users.add', {email: 'foo@bar.com', name: 'Baz'}, [['name']])
+        );
+
+        expect(baseDispatch.calls.length).toEqual(2);
+
+        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+          type: 'FALCOR_CALL_PATH_REQUEST',
+          path: 'users.add',
+          args: { email: 'foo@bar.com', name: 'Baz' },
+          refPaths: [[ 'name' ]],
+          thisPaths: undefined,
+        });
+
+        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+          type: 'FALCOR_CALL_PATH',
+          path: 'users.add',
+          args: { email: 'foo@bar.com', name: 'Baz' },
+          refPaths: [[ 'name' ]],
+          thisPaths: undefined,
+          res: {
+            json: {
+              users: {
+                1: {
+                  name: 'Baz',
+                },
+              },
+            },
           },
         });
       });

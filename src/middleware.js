@@ -3,6 +3,7 @@ import {
   RETRIEVE_VALUE,
   SET_PATH,
   RETRIEVE_PATHS,
+  CALL_PATH,
 } from './actions';
 
 function UnreconizedActionTypeException(message) {
@@ -39,6 +40,23 @@ export default function createFalcorMiddleware(falcor) {
         break;
       case SET_PATH:
         promise = falcor.set(falcorPath);
+        break;
+      case CALL_PATH:
+        let { args } = rest;
+        const { refPaths, thisPaths } = rest;
+
+        if (!Array.isArray(args)) {
+          args = [ args ];
+        }
+
+        if (thisPaths) {
+          promise = falcor.call(falcorPath, args, refPaths, thisPaths);
+        } else if (refPaths) {
+          promise = falcor.call(falcorPath, args, refPaths);
+        } else {
+          promise = falcor.call(falcorPath, args);
+        }
+
         break;
       default:
         throw new UnreconizedActionTypeException('Do not know the action, ' + type);

@@ -48,6 +48,7 @@
     "eslint-config-airbnb": "^0.1.0",
     "expect": "^1.11.1",
     "falcor": "^0.1.13",
+    "falcor-router": "^0.2.9",
     "mocha": "^2.3.3",
     "rimraf": "^2.4.3",
     "webpack": "^1.12.2"

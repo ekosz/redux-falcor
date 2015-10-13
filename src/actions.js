@@ -4,6 +4,7 @@ export const RETRIEVE_PATH = 'FALCOR_RETRIEVE_PATH';
 export const RETRIEVE_PATHS = 'FALCOR_RETRIEVE_PATHS';
 export const RETRIEVE_VALUE = 'FALCOR_RETRIEVE_VALUE';
 export const SET_PATH = 'FALCOR_SET_PATH';
+export const CALL_PATH = 'FALCOR_CALL_PATH';
 
 export function retrievePath(path) {
   return {
@@ -37,5 +38,16 @@ export function setPath(path, value) {
     falcorPath: pathValue(path, value),
     path,
     value,
+  };
+}
+
+export function callPath(path, args, refPaths, thisPaths) {
+  return {
+    type: CALL_PATH,
+    falcorPath: path,
+    path,
+    args,
+    refPaths,
+    thisPaths,
   };
 }
