@@ -116,6 +116,18 @@ describe('createFalcorMiddleware', () => {
           res: 'foo@bar.com',
         });
       });
+
+      it('returns the value in a promise', (done) => {
+        cache = {
+          my: {
+            email: 'foo@bar.com',
+          },
+        };
+
+        dispatch(retrieveValue('my["email"]')).then((email) => {
+          expect(email).toEqual('foo@bar.com');
+        }).then(done, done);
+      });
     });
 
     describe('setPath', () => {

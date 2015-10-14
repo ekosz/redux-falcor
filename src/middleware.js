@@ -65,11 +65,11 @@ export default function createFalcorMiddleware(falcor) {
       return promise
         .then(res => {
           next({ ...rest, res, type: SUCCESS });
-          return true;
+          return res;
         })
         .catch(error => {
           next({ ...rest, error, type: FAILURE });
-          return false;
+          return error;
         });
     };
   };
