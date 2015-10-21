@@ -66,6 +66,20 @@ describe('falcorReducer', () => {
       const newState = falcorReducer(state, action);
       expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
     });
+
+    it('ignores missing results', () => {
+      const state = {
+        foo: 'bar',
+        a: 'b',
+      };
+
+      const action = {
+        type: RETRIEVE_PATH,
+      };
+
+      const newState = falcorReducer(state, action);
+      expect(newState).toEqual({foo: 'bar', a: 'b', loading: false});
+    });
   });
 
   describe(SET_PATH, () => {
@@ -100,6 +114,20 @@ describe('falcorReducer', () => {
 
       const newState = falcorReducer(state, action);
       expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
+    });
+
+    it('ignores missing results', () => {
+      const state = {
+        foo: 'bar',
+        a: 'b',
+      };
+
+      const action = {
+        type: RETRIEVE_PATH,
+      };
+
+      const newState = falcorReducer(state, action);
+      expect(newState).toEqual({foo: 'bar', a: 'b', loading: false});
     });
   });
 
@@ -136,6 +164,20 @@ describe('falcorReducer', () => {
       const newState = falcorReducer(state, action);
       expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
     });
+
+    it('ignores missing results', () => {
+      const state = {
+        foo: 'bar',
+        a: 'b',
+      };
+
+      const action = {
+        type: RETRIEVE_PATH,
+      };
+
+      const newState = falcorReducer(state, action);
+      expect(newState).toEqual({foo: 'bar', a: 'b', loading: false});
+    });
   });
 
   describe(CALL_PATH, () => {
@@ -170,6 +212,20 @@ describe('falcorReducer', () => {
 
       const newState = falcorReducer(state, action);
       expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
+    });
+
+    it('ignores missing results', () => {
+      const state = {
+        foo: 'bar',
+        a: 'b',
+      };
+
+      const action = {
+        type: RETRIEVE_PATH,
+      };
+
+      const newState = falcorReducer(state, action);
+      expect(newState).toEqual({foo: 'bar', a: 'b', loading: false});
     });
   });
 

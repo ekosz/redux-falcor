@@ -19,7 +19,9 @@ export default function falcorReducer(state = initialState, action) {
   case RETRIEVE_PATHS:
   case SET_PATH:
   case CALL_PATH:
-    return merge({...state, loading: false}, action.res.json);
+    const newState = {...state, loading: false};
+    if (!action.res) return newState;
+    return merge(newState, action.res.json);
 
   case (RETRIEVE_VALUE + '_FAILURE'):
   case (RETRIEVE_PATH + '_FAILURE'):
