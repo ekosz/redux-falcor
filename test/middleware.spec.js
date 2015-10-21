@@ -7,6 +7,11 @@ import {
   setPath,
   retrievePaths,
   callPath,
+  RETRIEVE_VALUE,
+  RETRIEVE_PATH,
+  RETRIEVE_PATHS,
+  SET_PATH,
+  CALL_PATH,
 } from '../src/actions';
 import createFalcorMiddleware from '../src/middleware';
 
@@ -47,12 +52,12 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls.length).toEqual(2);
 
         expect(baseDispatch.calls[0].arguments[0]).toEqual({
-          type: 'FALCOR_RETRIEVE_PATH_REQUEST',
+          type: RETRIEVE_PATH + '_REQUEST',
           path: 'my["email"]',
         });
 
         expect(baseDispatch.calls[1].arguments[0]).toEqual({
-          type: 'FALCOR_RETRIEVE_PATH',
+          type: RETRIEVE_PATH,
           path: 'my["email"]',
           res: {
             json: cache,
@@ -75,12 +80,12 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls.length).toEqual(2);
 
         expect(baseDispatch.calls[0].arguments[0]).toEqual({
-          type: 'FALCOR_RETRIEVE_PATH_REQUEST',
+          type: RETRIEVE_PATH + '_REQUEST',
           path: 'my["email"]',
         });
 
         expect(baseDispatch.calls[1].arguments[0]).toEqual({
-          type: 'FALCOR_RETRIEVE_PATH',
+          type: RETRIEVE_PATH,
           path: 'my["email"]',
           res: {
             json: {
@@ -106,12 +111,12 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls.length).toEqual(2);
 
         expect(baseDispatch.calls[0].arguments[0]).toEqual({
-          type: 'FALCOR_RETRIEVE_VALUE_REQUEST',
+          type: RETRIEVE_VALUE + '_REQUEST',
           path: 'my["email"]',
         });
 
         expect(baseDispatch.calls[1].arguments[0]).toEqual({
-          type: 'FALCOR_RETRIEVE_VALUE',
+          type: RETRIEVE_VALUE,
           path: 'my["email"]',
           res: 'foo@bar.com',
         });
@@ -143,13 +148,13 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls.length).toEqual(2);
 
         expect(baseDispatch.calls[0].arguments[0]).toEqual({
-          type: 'FALCOR_SET_PATH_REQUEST',
+          type: SET_PATH + '_REQUEST',
           path: 'my["email"]',
           value: 'baz@bar.com',
         });
 
         expect(baseDispatch.calls[1].arguments[0]).toEqual({
-          type: 'FALCOR_SET_PATH',
+          type: SET_PATH,
           path: 'my["email"]',
           value: 'baz@bar.com',
           res: {
@@ -179,12 +184,12 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls.length).toEqual(2);
 
         expect(baseDispatch.calls[0].arguments[0]).toEqual({
-          type: 'FALCOR_RETRIEVE_PATHS_REQUEST',
+          type: RETRIEVE_PATHS + '_REQUEST',
           paths: ['my["email"]', 'users["length"]'],
         });
 
         expect(baseDispatch.calls[1].arguments[0]).toEqual({
-          type: 'FALCOR_RETRIEVE_PATHS',
+          type: RETRIEVE_PATHS,
           paths: ['my["email"]', 'users["length"]'],
           res: {
             json: cache,
@@ -221,7 +226,7 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls.length).toEqual(2);
 
         expect(baseDispatch.calls[0].arguments[0]).toEqual({
-          type: 'FALCOR_CALL_PATH_REQUEST',
+          type: CALL_PATH + '_REQUEST',
           path: 'users.add',
           args: { email: 'foo@bar.com', name: 'Baz' },
           refPaths: [[ 'name' ]],
@@ -229,7 +234,7 @@ describe('createFalcorMiddleware', () => {
         });
 
         expect(baseDispatch.calls[1].arguments[0]).toEqual({
-          type: 'FALCOR_CALL_PATH',
+          type: CALL_PATH,
           path: 'users.add',
           args: { email: 'foo@bar.com', name: 'Baz' },
           refPaths: [[ 'name' ]],
