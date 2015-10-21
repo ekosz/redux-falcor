@@ -11,8 +11,10 @@ export default function falcorReducer(state = initialState, action) {
   case (SET_PATH + '_REQUEST'):
   case (CALL_PATH + '_REQUEST'):
     return {...state, loading: true };
+
   case RETRIEVE_VALUE:
     return {...state, loading: false };
+
   case RETRIEVE_PATH:
   case RETRIEVE_PATHS:
   case SET_PATH:
