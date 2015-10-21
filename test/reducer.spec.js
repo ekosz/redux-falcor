@@ -172,4 +172,20 @@ describe('falcorReducer', () => {
       expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
     });
   });
+
+  [
+    RETRIEVE_VALUE + '_FAILURE',
+    RETRIEVE_PATH + '_FAILURE',
+    RETRIEVE_PATHS + '_FAILURE',
+    SET_PATH + '_FAILURE',
+    CALL_PATH + '_FAILURE',
+  ].forEach((type) => {
+    describe(type, () => {
+      it('marks the state as not loading', () => {
+        const newState = falcorReducer({loading: true}, { type });
+
+        expect(newState.loading).toBe(false);
+      });
+    });
+  });
 });
