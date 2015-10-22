@@ -4,6 +4,7 @@ import {
   RETRIEVE_VALUE,
   RETRIEVE_PATH,
   SET_PATH,
+  SET_PATHS,
   RETRIEVE_PATHS,
   CALL_PATH,
 } from '../src/actions';
@@ -14,6 +15,7 @@ describe('falcorReducer', () => {
     RETRIEVE_PATH + '_REQUEST',
     RETRIEVE_PATHS + '_REQUEST',
     SET_PATH + '_REQUEST',
+    SET_PATHS + '_REQUEST',
     CALL_PATH + '_REQUEST',
   ].forEach((type) => {
     describe(type, () => {
@@ -131,6 +133,41 @@ describe('falcorReducer', () => {
     });
   });
 
+  describe(SET_PATHS, () => {
+    it('merges the result properly into an inital state', () => {
+      const action = {
+        type: SET_PATHS,
+        res: {
+          json: {
+            foo: 'bar',
+          },
+        },
+      };
+
+      const newState = falcorReducer(undefined, action);
+      expect(newState).toEqual({foo: 'bar', loading: false});
+    });
+
+    it('merges the result properly into an existing state', () => {
+      const state = {
+        foo: 'bar',
+        a: 'b',
+      };
+
+      const action = {
+        type: SET_PATHS,
+        res: {
+          json: {
+            foo: 'baz',
+          },
+        },
+      };
+
+      const newState = falcorReducer(state, action);
+      expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
+    });
+  });
+
   describe(RETRIEVE_PATHS, () => {
     it('merges the result properly into an inital state', () => {
       const action = {
@@ -234,6 +271,7 @@ describe('falcorReducer', () => {
     RETRIEVE_PATH + '_FAILURE',
     RETRIEVE_PATHS + '_FAILURE',
     SET_PATH + '_FAILURE',
+    SET_PATHS + '_FAILURE',
     CALL_PATH + '_FAILURE',
   ].forEach((type) => {
     describe(type, () => {

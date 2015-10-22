@@ -2,6 +2,7 @@ import {
   RETRIEVE_PATH,
   RETRIEVE_VALUE,
   SET_PATH,
+  SET_PATHS,
   RETRIEVE_PATHS,
   CALL_PATH,
 } from './actions';
@@ -40,6 +41,9 @@ export default function createFalcorMiddleware(falcor) {
         break;
       case SET_PATH:
         promise = falcor.set(falcorPath);
+        break;
+      case SET_PATHS:
+        promise = falcor.set.apply(falcor, falcorPath);
         break;
       case CALL_PATH:
         let { args } = rest;

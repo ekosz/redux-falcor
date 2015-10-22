@@ -5,12 +5,14 @@ import {
   retrievePath,
   retrieveValue,
   setPath,
+  setPaths,
   retrievePaths,
   callPath,
   RETRIEVE_VALUE,
   RETRIEVE_PATH,
   RETRIEVE_PATHS,
   SET_PATH,
+  SET_PATHS,
   CALL_PATH,
 } from '../src/actions';
 import createFalcorMiddleware from '../src/middleware';
@@ -140,6 +142,47 @@ describe('createFalcorMiddleware', () => {
         cache = {
           my: {
             email: 'foo@bar.com',
+          },
+        };
+
+        await dispatch(setPaths(
+          { path: 'my["email"]', value: 'baz@bar.com' },
+          { path: 'my["name"]', value: 'Smith' },
+        ));
+
+        const paths = [
+          { path: ['my', 'email'], value: 'baz@bar.com' },
+          { path: ['my', 'name'], value: 'Smith' },
+        ];
+
+        expect(baseDispatch.calls.length).toEqual(2);
+
+        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+          type: SET_PATHS + '_REQUEST',
+          paths,
+        });
+
+        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+          type: SET_PATHS,
+          paths,
+          res: {
+            json: {
+              my: {
+                email: 'baz@bar.com',
+                name: 'Smith',
+              },
+            },
+          },
+        });
+      });
+    });
+
+    describe('setPath', () => {
+      it('updates falcor', async () => {
+        cache = {
+          my: {
+            email: 'foo@bar.com',
+            name: 'John',
           },
         };
 

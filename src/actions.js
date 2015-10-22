@@ -4,6 +4,7 @@ export const RETRIEVE_PATH = 'redux-falcor/falcor/RETRIEVE_PATH';
 export const RETRIEVE_PATHS = 'redux-falcor/faclor/RETRIEVE_PATHS';
 export const RETRIEVE_VALUE = 'redux-falcor/faclor/RETRIEVE_VALUE';
 export const SET_PATH = 'redux-falcor/faclor/SET_PATH';
+export const SET_PATHS = 'redux-falcor/faclor/SET_PATHS';
 export const CALL_PATH = 'redux-falcor/faclor/CALL_PATH';
 
 export function retrievePath(path) {
@@ -38,6 +39,16 @@ export function setPath(path, value) {
     falcorPath: pathValue(path, value),
     path,
     value,
+  };
+}
+
+export function setPaths() {
+  const args = Array.prototype.slice.call(arguments);
+
+  return {
+    type: SET_PATHS,
+    falcorPath: args,
+    paths: args,
   };
 }
 
