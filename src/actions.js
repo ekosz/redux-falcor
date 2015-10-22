@@ -33,18 +33,9 @@ export function retrieveValue(path) {
 }
 
 export function setPath(path, value) {
-  let falcorPath;
-
-  if (!Array.isArray(path) && typeof path === 'object') {
-    // path is a JSONEnvelope
-    falcorPath = path;
-  } else {
-    falcorPath = pathValue(path, value);
-  }
-
   return {
     type: SET_PATH,
-    falcorPath,
+    falcorPath: pathValue(path, value),
     path,
     value,
   };
