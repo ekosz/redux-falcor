@@ -6,6 +6,7 @@ import {
   SET_PATH,
   SET_PATHS,
   CALL_PATH,
+  CLEAR,
 } from './actions';
 
 const initialState = {loading: false};
@@ -39,6 +40,10 @@ export default function falcorReducer(state = initialState, action) {
   case (SET_PATHS + '_FAILURE'):
   case (CALL_PATH + '_FAILURE'):
     return {...state, loading: false };
+
+  case CLEAR:
+    const { loading } = state;
+    return { loading };
 
   default:
     return state;

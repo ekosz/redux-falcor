@@ -6,6 +6,7 @@ export const RETRIEVE_VALUE = 'redux-falcor/faclor/RETRIEVE_VALUE';
 export const SET_PATH = 'redux-falcor/faclor/SET_PATH';
 export const SET_PATHS = 'redux-falcor/faclor/SET_PATHS';
 export const CALL_PATH = 'redux-falcor/faclor/CALL_PATH';
+export const CLEAR = 'redux-falcor/faclor/CLEAR';
 
 export function retrievePath(path) {
   return {
@@ -61,4 +62,8 @@ export function callPath(path, args, refPaths, thisPaths) {
     refPaths,
     thisPaths,
   };
+}
+
+export function clear() {
+  return { type: CLEAR };
 }

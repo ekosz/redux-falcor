@@ -7,6 +7,7 @@ import {
   SET_PATHS,
   RETRIEVE_PATHS,
   CALL_PATH,
+  CLEAR,
 } from '../src/actions';
 
 describe('falcorReducer', () => {
@@ -263,6 +264,20 @@ describe('falcorReducer', () => {
 
       const newState = falcorReducer(state, action);
       expect(newState).toEqual({foo: 'bar', a: 'b', loading: false});
+    });
+  });
+
+  describe(CLEAR, () => {
+    it('clears all of the falcor state from the redux store', () => {
+      const state = {
+        foo: 'bar',
+        a: 'b',
+        loading: true,
+      };
+
+      const action = { type: CLEAR };
+      const newState = falcorReducer(state, action);
+      expect(newState).toEqual({loading: true});
     });
   });
 
