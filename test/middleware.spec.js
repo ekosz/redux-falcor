@@ -41,6 +41,14 @@ describe('createFalcorMiddleware', () => {
       };
     });
 
+    describe('UnrecognizedActionTypeException', () => {
+      it('should throw when there is a falcorPath and an unknown action', () => {
+        const dispatchError = () => dispatch({falcorPath: 'path', type: 'FAKE_ACTION'});
+
+        expect(dispatchError).toThrow(/FAKE_ACTION/);
+      });
+    });
+
     describe('retrievePath', () => {
       it('gets data from falcor', async () => {
         cache = {

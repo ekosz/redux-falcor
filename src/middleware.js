@@ -7,9 +7,9 @@ import {
   CALL_PATH,
 } from './actions';
 
-function UnreconizedActionTypeException(message) {
+function UnrecognizedActionTypeException(message) {
   this.message = message;
-  this.name = 'UnreconizedActionTypeException';
+  this.name = 'UnrecognizedActionTypeException';
 }
 
 export default function createFalcorMiddleware(falcor) {
@@ -63,7 +63,7 @@ export default function createFalcorMiddleware(falcor) {
 
         break;
       default:
-        throw new UnreconizedActionTypeException('Do not know the action, ' + type);
+        throw new UnrecognizedActionTypeException('Do not know the action, ' + type);
       }
 
       return promise
