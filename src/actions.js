@@ -1,12 +1,12 @@
 import { pathValue } from 'falcor-json-graph';
 
 export const RETRIEVE_PATH = 'redux-falcor/falcor/RETRIEVE_PATH';
-export const RETRIEVE_PATHS = 'redux-falcor/faclor/RETRIEVE_PATHS';
-export const RETRIEVE_VALUE = 'redux-falcor/faclor/RETRIEVE_VALUE';
-export const SET_PATH = 'redux-falcor/faclor/SET_PATH';
-export const SET_PATHS = 'redux-falcor/faclor/SET_PATHS';
-export const CALL_PATH = 'redux-falcor/faclor/CALL_PATH';
-export const CLEAR = 'redux-falcor/faclor/CLEAR';
+export const RETRIEVE_PATHS = 'redux-falcor/falcor/RETRIEVE_PATHS';
+export const RETRIEVE_VALUE = 'redux-falcor/falcor/RETRIEVE_VALUE';
+export const SET_PATH = 'redux-falcor/falcor/SET_PATH';
+export const SET_PATHS = 'redux-falcor/falcor/SET_PATHS';
+export const CALL_PATH = 'redux-falcor/falcor/CALL_PATH';
+export const CLEAR = 'redux-falcor/falcor/CLEAR';
 
 export function retrievePath(path) {
   return {
