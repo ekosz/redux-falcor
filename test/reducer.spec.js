@@ -274,11 +274,12 @@ describe('falcorReducer', () => {
         foo: 'bar',
         a: 'b',
         loading: true,
+        _requests: {abc: true},
       };
 
       const action = { type: CLEAR };
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({loading: true});
+      expect(newState).toEqual({loading: true, _requests: {abc: true}});
     });
   });
 
@@ -296,6 +297,20 @@ describe('falcorReducer', () => {
 
         expect(newState.loading).toBe(false);
       });
+    });
+  });
+
+  describe('Multiple parallel loads', () => {
+    it('stays loading even when one finishes before the other', () => {
+      let state;
+      // Start 2
+      state = falcorReducer(undefined, { type: RETRIEVE_PATHS + '_REQUEST', _id: 1 });
+      state = falcorReducer(state, { type: CALL_PATH + '_REQUEST', _id: 2 });
+
+      // End 1
+      state = falcorReducer(state, { type: RETRIEVE_PATHS, _id: 1 });
+
+      expect(state.loading).toBe(true);
     });
   });
 });

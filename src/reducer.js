@@ -16,33 +16,38 @@ function endsWith(subjectString, searchString) {
   return lastIndex !== -1 && lastIndex === position;
 }
 
-const initialState = {loading: false};
+function omit(object, key) {
+  const { [key]: _old, ...rest } = object;
+  return rest;
+}
+
+const initialState = {loading: false, _requests: {}};
 
 export default function falcorReducer(state = initialState, action) {
+  const { loading: loading = false, _requests: _requests = {} } = state;
+
   if (endsWith(action.type, '_REQUEST')) {
-    return {...state, loading: true };
+    return {...state, loading: true, _requests: {..._requests, [action.id]: true} };
   }
 
-  if (endsWith(action.type, '_FAILURE')) {
-    return {...state, loading: false };
+  if (endsWith(action.type, '_FAILURE') || action.type === RETRIEVE_VALUE) {
+    const requests = omit(_requests, action._id);
+    return {...state, loading: Object.keys(requests).length !== 0, _requests: requests };
   }
 
   switch (action.type) {
-  case RETRIEVE_VALUE:
-    return {...state, loading: false };
-
   case RETRIEVE_PATH:
   case RETRIEVE_PATHS:
   case SET_PATH:
   case SET_PATHS:
   case CALL_PATH:
-    const newState = {...state, loading: false};
+    const requests = omit(_requests, action._id);
+    const newState = {...state, loading: Object.keys(requests).length !== 0, _requests: requests};
     if (!action.res) return newState;
     return merge(newState, action.res.json);
 
   case CLEAR:
-    const { loading } = state;
-    return { loading };
+    return { loading, _requests };
 
   default:
     return state;

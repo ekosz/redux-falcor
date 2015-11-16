@@ -34,7 +34,8 @@
   "homepage": "https://github.com/ekosz/redux-falcor#readme",
   "dependencies": {
     "deepmerge": "^0.2.10",
-    "falcor-json-graph": "^2.0.0"
+    "falcor-json-graph": "^2.0.0",
+    "tiny-uuid": "^1.0.0"
   },
   "peerDependencies": {
     "falcor": "^0.1.13"
