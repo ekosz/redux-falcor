@@ -46,7 +46,7 @@
     "babel-loader": "^5.3.2",
     "eslint": "^1.6.0",
     "eslint-config-airbnb": "^0.1.0",
-    "expect": "^1.11.1",
+    "expect": "^1.12.1",
     "falcor": "^0.1.13",
     "falcor-router": "^0.2.9",
     "mocha": "^2.3.3",
