@@ -304,13 +304,17 @@ describe('falcorReducer', () => {
     it('stays loading even when one finishes before the other', () => {
       let state;
       // Start 2
-      state = falcorReducer(undefined, { type: RETRIEVE_PATHS + '_REQUEST', _id: 1 });
-      state = falcorReducer(state, { type: CALL_PATH + '_REQUEST', _id: 2 });
+      state = falcorReducer(undefined, { type: RETRIEVE_PATHS + '_REQUEST', _id: 'a' });
+      state = falcorReducer(state, { type: CALL_PATH + '_REQUEST', _id: 'b' });
 
       // End 1
-      state = falcorReducer(state, { type: RETRIEVE_PATHS, _id: 1 });
-
+      state = falcorReducer(state, { type: RETRIEVE_PATHS, _id: 'a' });
       expect(state.loading).toBe(true);
+
+      // End other
+      state = falcorReducer(state, { type: CALL_PATH, _id: 'b' });
+      expect(state.loading).toBe(false);
+      expect(state._requests).toEqual({});
     });
   });
 });

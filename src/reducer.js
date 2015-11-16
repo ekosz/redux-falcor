@@ -27,7 +27,7 @@ export default function falcorReducer(state = initialState, action) {
   const { loading: loading = false, _requests: _requests = {} } = state;
 
   if (endsWith(action.type, '_REQUEST')) {
-    return {...state, loading: true, _requests: {..._requests, [action.id]: true} };
+    return {...state, loading: true, _requests: {..._requests, [action._id]: true} };
   }
 
   if (endsWith(action.type, '_FAILURE') || action.type === RETRIEVE_VALUE) {
