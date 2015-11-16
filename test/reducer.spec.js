@@ -1,3 +1,4 @@
+import './helpers';
 import expect from 'expect';
 import falcorReducer from '../src/reducer';
 import {
@@ -48,7 +49,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(undefined, action);
-      expect(newState).toEqual({foo: 'bar', loading: false});
+      expect(newState).toMatchObject({foo: 'bar'});
     });
 
     it('merges the result properly into an existing state', () => {
@@ -67,7 +68,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
+      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
     });
 
     it('ignores missing results', () => {
@@ -81,7 +82,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({foo: 'bar', a: 'b', loading: false});
+      expect(newState).toMatchObject({foo: 'bar', a: 'b'});
     });
   });
 
@@ -97,7 +98,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(undefined, action);
-      expect(newState).toEqual({foo: 'bar', loading: false});
+      expect(newState).toMatchObject({foo: 'bar'});
     });
 
     it('merges the result properly into an existing state', () => {
@@ -116,7 +117,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
+      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
     });
 
     it('ignores missing results', () => {
@@ -130,7 +131,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({foo: 'bar', a: 'b', loading: false});
+      expect(newState).toMatchObject({foo: 'bar', a: 'b'});
     });
   });
 
@@ -146,7 +147,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(undefined, action);
-      expect(newState).toEqual({foo: 'bar', loading: false});
+      expect(newState).toMatchObject({foo: 'bar'});
     });
 
     it('merges the result properly into an existing state', () => {
@@ -165,7 +166,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
+      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
     });
   });
 
@@ -181,7 +182,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(undefined, action);
-      expect(newState).toEqual({foo: 'bar', loading: false});
+      expect(newState).toMatchObject({foo: 'bar'});
     });
 
     it('merges the result properly into an existing state', () => {
@@ -200,7 +201,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
+      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
     });
 
     it('ignores missing results', () => {
@@ -214,7 +215,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({foo: 'bar', a: 'b', loading: false});
+      expect(newState).toMatchObject({foo: 'bar', a: 'b'});
     });
   });
 
@@ -230,7 +231,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(undefined, action);
-      expect(newState).toEqual({foo: 'bar', loading: false});
+      expect(newState).toMatchObject({foo: 'bar'});
     });
 
     it('merges the result properly into an existing state', () => {
@@ -249,7 +250,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({foo: 'baz', a: 'b', loading: false});
+      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
     });
 
     it('ignores missing results', () => {
@@ -263,7 +264,7 @@ describe('falcorReducer', () => {
       };
 
       const newState = falcorReducer(state, action);
-      expect(newState).toEqual({foo: 'bar', a: 'b', loading: false});
+      expect(newState).toMatchObject({foo: 'bar', a: 'b'});
     });
   });
 

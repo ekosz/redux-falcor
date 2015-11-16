@@ -1,7 +1,7 @@
+import './helpers';
 import { Model } from 'falcor';
 import Router from 'falcor-router';
 import expect from 'expect';
-import deepEqual from 'deep-equal';
 import {
   retrievePath,
   retrieveValue,
@@ -17,26 +17,6 @@ import {
   CALL_PATH,
 } from '../src/actions';
 import createFalcorMiddleware from '../src/middleware';
-
-expect.extend({
-  toMatchObject(obj) {
-    const nonMatches = [];
-    const args = [this.actual, obj];
-    Object.keys(obj).forEach(key => {
-      if (!deepEqual(this.actual[key], obj[key])) {
-        nonMatches.push(key);
-        args.push(key);
-        args.push(this.actual[key]);
-        args.push(obj[key]);
-      }
-    });
-
-    expect.assert.apply(this, [
-      nonMatches.length === 0,
-      'expected %s to match the object %s\n\n' + nonMatches.map(() => '     %s: %s should equal %s').join('\n'),
-    ].concat(args));
-  },
-});
 
 describe('createFalcorMiddleware', () => {
   let cache;
