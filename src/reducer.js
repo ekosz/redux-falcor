@@ -9,18 +9,25 @@ import {
   CLEAR,
 } from './actions';
 
+function endsWith(subjectString, searchString) {
+  let position = subjectString.length;
+  position -= searchString.length;
+  const lastIndex = subjectString.indexOf(searchString, position);
+  return lastIndex !== -1 && lastIndex === position;
+}
+
 const initialState = {loading: false};
 
 export default function falcorReducer(state = initialState, action) {
-  switch (action.type) {
-  case (RETRIEVE_VALUE + '_REQUEST'):
-  case (RETRIEVE_PATH + '_REQUEST'):
-  case (RETRIEVE_PATHS + '_REQUEST'):
-  case (SET_PATH + '_REQUEST'):
-  case (SET_PATHS + '_REQUEST'):
-  case (CALL_PATH + '_REQUEST'):
+  if (endsWith(action.type, '_REQUEST')) {
     return {...state, loading: true };
+  }
 
+  if (endsWith(action.type, '_FAILURE')) {
+    return {...state, loading: false };
+  }
+
+  switch (action.type) {
   case RETRIEVE_VALUE:
     return {...state, loading: false };
 
@@ -32,14 +39,6 @@ export default function falcorReducer(state = initialState, action) {
     const newState = {...state, loading: false};
     if (!action.res) return newState;
     return merge(newState, action.res.json);
-
-  case (RETRIEVE_VALUE + '_FAILURE'):
-  case (RETRIEVE_PATH + '_FAILURE'):
-  case (RETRIEVE_PATHS + '_FAILURE'):
-  case (SET_PATH + '_FAILURE'):
-  case (SET_PATHS + '_FAILURE'):
-  case (CALL_PATH + '_FAILURE'):
-    return {...state, loading: false };
 
   case CLEAR:
     const { loading } = state;
