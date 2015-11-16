@@ -1,6 +1,7 @@
 import { Model } from 'falcor';
 import Router from 'falcor-router';
 import expect from 'expect';
+import deepEqual from 'deep-equal';
 import {
   retrievePath,
   retrieveValue,
@@ -16,6 +17,26 @@ import {
   CALL_PATH,
 } from '../src/actions';
 import createFalcorMiddleware from '../src/middleware';
+
+expect.extend({
+  toMatchObject(obj) {
+    const nonMatches = [];
+    const args = [this.actual, obj];
+    Object.keys(obj).forEach(key => {
+      if (!deepEqual(this.actual[key], obj[key])) {
+        nonMatches.push(key);
+        args.push(key);
+        args.push(this.actual[key]);
+        args.push(obj[key]);
+      }
+    });
+
+    expect.assert.apply(this, [
+      nonMatches.length === 0,
+      'expected %s to match the object %s\n\n' + nonMatches.map(() => '     %s: %s should equal %s').join('\n'),
+    ].concat(args));
+  },
+});
 
 describe('createFalcorMiddleware', () => {
   let cache;
@@ -61,12 +82,12 @@ describe('createFalcorMiddleware', () => {
 
         expect(baseDispatch.calls.length).toEqual(2);
 
-        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+        expect(baseDispatch.calls[0].arguments[0]).toMatchObject({
           type: RETRIEVE_PATH + '_REQUEST',
           path: 'my["email"]',
         });
 
-        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+        expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: RETRIEVE_PATH,
           path: 'my["email"]',
           res: {
@@ -89,12 +110,12 @@ describe('createFalcorMiddleware', () => {
 
         expect(baseDispatch.calls.length).toEqual(2);
 
-        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+        expect(baseDispatch.calls[0].arguments[0]).toMatchObject({
           type: RETRIEVE_PATH + '_REQUEST',
           path: 'my["email"]',
         });
 
-        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+        expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: RETRIEVE_PATH,
           path: 'my["email"]',
           res: {
@@ -120,12 +141,12 @@ describe('createFalcorMiddleware', () => {
 
         expect(baseDispatch.calls.length).toEqual(2);
 
-        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+        expect(baseDispatch.calls[0].arguments[0]).toMatchObject({
           type: RETRIEVE_VALUE + '_REQUEST',
           path: 'my["email"]',
         });
 
-        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+        expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: RETRIEVE_VALUE,
           path: 'my["email"]',
           res: 'foo@bar.com',
@@ -165,12 +186,12 @@ describe('createFalcorMiddleware', () => {
 
         expect(baseDispatch.calls.length).toEqual(2);
 
-        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+        expect(baseDispatch.calls[0].arguments[0]).toMatchObject({
           type: SET_PATHS + '_REQUEST',
           paths,
         });
 
-        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+        expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: SET_PATHS,
           paths,
           res: {
@@ -198,13 +219,13 @@ describe('createFalcorMiddleware', () => {
 
         expect(baseDispatch.calls.length).toEqual(2);
 
-        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+        expect(baseDispatch.calls[0].arguments[0]).toMatchObject({
           type: SET_PATH + '_REQUEST',
           path: 'my["email"]',
           value: 'baz@bar.com',
         });
 
-        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+        expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: SET_PATH,
           path: 'my["email"]',
           value: 'baz@bar.com',
@@ -234,12 +255,12 @@ describe('createFalcorMiddleware', () => {
 
         expect(baseDispatch.calls.length).toEqual(2);
 
-        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+        expect(baseDispatch.calls[0].arguments[0]).toMatchObject({
           type: RETRIEVE_PATHS + '_REQUEST',
           paths: ['my["email"]', 'users["length"]'],
         });
 
-        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+        expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: RETRIEVE_PATHS,
           paths: ['my["email"]', 'users["length"]'],
           res: {
@@ -276,7 +297,7 @@ describe('createFalcorMiddleware', () => {
 
         expect(baseDispatch.calls.length).toEqual(2);
 
-        expect(baseDispatch.calls[0].arguments[0]).toEqual({
+        expect(baseDispatch.calls[0].arguments[0]).toMatchObject({
           type: CALL_PATH + '_REQUEST',
           path: 'users.add',
           args: { email: 'foo@bar.com', name: 'Baz' },
@@ -284,7 +305,7 @@ describe('createFalcorMiddleware', () => {
           thisPaths: undefined,
         });
 
-        expect(baseDispatch.calls[1].arguments[0]).toEqual({
+        expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: CALL_PATH,
           path: 'users.add',
           args: { email: 'foo@bar.com', name: 'Baz' },
