@@ -70,8 +70,15 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: RETRIEVE_PATH,
           path: 'my["email"]',
-          res: {
-            json: cache,
+          cache: {
+            my: {
+              email: {
+                $modelCreated: true,
+                $size: 61,
+                $type: 'atom',
+                value: 'foo@bar.com',
+              },
+            },
           },
         });
       });
@@ -98,10 +105,20 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: RETRIEVE_PATH,
           path: 'my["email"]',
-          res: {
-            json: {
-              my: {
-                email: 'foo@bar.com',
+          cache: {
+            my: {
+              $size: 52,
+              $type: 'ref',
+              value: [ 'usersById', 35 ],
+            },
+            usersById: {
+              35: {
+                email: {
+                  $modelCreated: true,
+                  $size: 61,
+                  $type: 'atom',
+                  value: 'foo@bar.com',
+                },
               },
             },
           },
@@ -129,7 +146,16 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: RETRIEVE_VALUE,
           path: 'my["email"]',
-          res: 'foo@bar.com',
+          cache: {
+            my: {
+              email: {
+                $modelCreated: true,
+                $size: 61,
+                $type: 'atom',
+                value: 'foo@bar.com',
+              },
+            },
+          },
         });
       });
 
@@ -174,11 +200,19 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: SET_PATHS,
           paths,
-          res: {
-            json: {
-              my: {
-                email: 'baz@bar.com',
-                name: 'Smith',
+          cache: {
+            my: {
+              email: {
+                $modelCreated: true,
+                $size: 61,
+                $type: 'atom',
+                value: 'baz@bar.com',
+              },
+              name: {
+                $modelCreated: true,
+                $size: 55,
+                $type: 'atom',
+                value: 'Smith',
               },
             },
           },
@@ -209,10 +243,19 @@ describe('createFalcorMiddleware', () => {
           type: SET_PATH,
           path: 'my["email"]',
           value: 'baz@bar.com',
-          res: {
-            json: {
-              my: {
-                email: 'baz@bar.com',
+          cache: {
+            my: {
+              email: {
+                $modelCreated: true,
+                $size: 61,
+                $type: 'atom',
+                value: 'baz@bar.com',
+              },
+              name: {
+                $modelCreated: true,
+                $size: 54,
+                $type: 'atom',
+                value: 'John',
               },
             },
           },
@@ -243,8 +286,23 @@ describe('createFalcorMiddleware', () => {
         expect(baseDispatch.calls[1].arguments[0]).toMatchObject({
           type: RETRIEVE_PATHS,
           paths: ['my["email"]', 'users["length"]'],
-          res: {
-            json: cache,
+          cache: {
+            my: {
+              email: {
+                $modelCreated: true,
+                $size: 61,
+                $type: 'atom',
+                value: 'foo@bar.com',
+              },
+            },
+            users: {
+              length: {
+                $modelCreated: true,
+                $size: 51,
+                $type: 'atom',
+                value: 1,
+              },
+            },
           },
         });
       });
@@ -291,11 +349,21 @@ describe('createFalcorMiddleware', () => {
           args: { email: 'foo@bar.com', name: 'Baz' },
           refPaths: [[ 'name' ]],
           thisPaths: undefined,
-          res: {
-            json: {
-              users: {
-                1: {
-                  name: 'Baz',
+          cache: {
+            users: {
+              1: {
+                $size: 52,
+                $type: 'ref',
+                value: ['usersById', 99],
+              },
+            },
+            usersById: {
+              99: {
+                name: {
+                  $modelCreated: true,
+                  $size: 53,
+                  $type: 'atom',
+                  value: 'Baz',
                 },
               },
             },

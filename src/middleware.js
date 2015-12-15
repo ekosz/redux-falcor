@@ -68,7 +68,7 @@ export default function createFalcorMiddleware(falcor) {
 
       return promise
         .then(res => {
-          next({ ...rest, res, type: SUCCESS });
+          next({ ...rest, cache: falcor.getCache(), type: SUCCESS });
           return res;
         })
         .catch(error => {

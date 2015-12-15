@@ -1,4 +1,4 @@
-import merge from 'deepmerge';
+import expandCache from 'falcor-expand-cache';
 import {
   RETRIEVE_VALUE,
   RETRIEVE_PATH,
@@ -30,21 +30,22 @@ export default function falcorReducer(state = initialState, action) {
     return {...state, loading: true, _requests: {..._requests, [action._id]: true} };
   }
 
-  if (endsWith(action.type, '_FAILURE') || action.type === RETRIEVE_VALUE) {
+  if (endsWith(action.type, '_FAILURE')) {
     const requests = omit(_requests, action._id);
     return {...state, loading: Object.keys(requests).length !== 0, _requests: requests };
   }
 
   switch (action.type) {
+  case RETRIEVE_VALUE:
   case RETRIEVE_PATH:
   case RETRIEVE_PATHS:
   case SET_PATH:
   case SET_PATHS:
   case CALL_PATH:
     const requests = omit(_requests, action._id);
-    const newState = {...state, loading: Object.keys(requests).length !== 0, _requests: requests};
-    if (!action.res) return newState;
-    return merge(newState, action.res.json);
+    const newState = { loading: Object.keys(requests).length !== 0, _requests: requests };
+    if (!action.cache) return {...state, ...newState };
+    return { ...newState, ...(expandCache(action.cache)) };
 
   case CLEAR:
     return { loading, _requests };

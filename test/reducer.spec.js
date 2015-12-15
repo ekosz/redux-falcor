@@ -29,242 +29,34 @@ describe('falcorReducer', () => {
     });
   });
 
-  describe(RETRIEVE_VALUE, () => {
-    it('sets the loading attribute to false', () => {
-      const newState = falcorReducer({loading: true}, { type: RETRIEVE_VALUE });
+  [
+    RETRIEVE_VALUE,
+    RETRIEVE_PATH,
+    RETRIEVE_PATHS,
+    SET_PATH,
+    SET_PATHS,
+    CALL_PATH,
+  ].forEach((type) => {
+    describe(type, () => {
+      it('replaces the redux state with the expanded falcor cache', () => {
+        const newState = falcorReducer(undefined, {
+          type,
+          cache: { foo: { $type: 'atom', value: 'bar' } },
+        });
 
-      expect(newState.loading).toBe(false);
-    });
-  });
+        expect(newState.foo).toEqual('bar');
+      });
 
-  describe(RETRIEVE_PATH, () => {
-    it('merges the result properly into an inital state', () => {
-      const action = {
-        type: RETRIEVE_PATH,
-        res: {
-          json: {
-            foo: 'bar',
-          },
-        },
-      };
+      it('keeps its exsiting state when there is no cache', () => {
+        const initialState = falcorReducer(undefined, {
+          type,
+          cache: { foo: { $type: 'atom', value: 'bar' } },
+        });
 
-      const newState = falcorReducer(undefined, action);
-      expect(newState).toMatchObject({foo: 'bar'});
-    });
+        const newState = falcorReducer(initialState, { type });
 
-    it('merges the result properly into an existing state', () => {
-      const state = {
-        foo: 'bar',
-        a: 'b',
-      };
-
-      const action = {
-        type: RETRIEVE_PATH,
-        res: {
-          json: {
-            foo: 'baz',
-          },
-        },
-      };
-
-      const newState = falcorReducer(state, action);
-      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
-    });
-
-    it('ignores missing results', () => {
-      const state = {
-        foo: 'bar',
-        a: 'b',
-      };
-
-      const action = {
-        type: RETRIEVE_PATH,
-      };
-
-      const newState = falcorReducer(state, action);
-      expect(newState).toMatchObject({foo: 'bar', a: 'b'});
-    });
-  });
-
-  describe(SET_PATH, () => {
-    it('merges the result properly into an inital state', () => {
-      const action = {
-        type: SET_PATH,
-        res: {
-          json: {
-            foo: 'bar',
-          },
-        },
-      };
-
-      const newState = falcorReducer(undefined, action);
-      expect(newState).toMatchObject({foo: 'bar'});
-    });
-
-    it('merges the result properly into an existing state', () => {
-      const state = {
-        foo: 'bar',
-        a: 'b',
-      };
-
-      const action = {
-        type: SET_PATH,
-        res: {
-          json: {
-            foo: 'baz',
-          },
-        },
-      };
-
-      const newState = falcorReducer(state, action);
-      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
-    });
-
-    it('ignores missing results', () => {
-      const state = {
-        foo: 'bar',
-        a: 'b',
-      };
-
-      const action = {
-        type: RETRIEVE_PATH,
-      };
-
-      const newState = falcorReducer(state, action);
-      expect(newState).toMatchObject({foo: 'bar', a: 'b'});
-    });
-  });
-
-  describe(SET_PATHS, () => {
-    it('merges the result properly into an inital state', () => {
-      const action = {
-        type: SET_PATHS,
-        res: {
-          json: {
-            foo: 'bar',
-          },
-        },
-      };
-
-      const newState = falcorReducer(undefined, action);
-      expect(newState).toMatchObject({foo: 'bar'});
-    });
-
-    it('merges the result properly into an existing state', () => {
-      const state = {
-        foo: 'bar',
-        a: 'b',
-      };
-
-      const action = {
-        type: SET_PATHS,
-        res: {
-          json: {
-            foo: 'baz',
-          },
-        },
-      };
-
-      const newState = falcorReducer(state, action);
-      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
-    });
-  });
-
-  describe(RETRIEVE_PATHS, () => {
-    it('merges the result properly into an inital state', () => {
-      const action = {
-        type: RETRIEVE_PATHS,
-        res: {
-          json: {
-            foo: 'bar',
-          },
-        },
-      };
-
-      const newState = falcorReducer(undefined, action);
-      expect(newState).toMatchObject({foo: 'bar'});
-    });
-
-    it('merges the result properly into an existing state', () => {
-      const state = {
-        foo: 'bar',
-        a: 'b',
-      };
-
-      const action = {
-        type: RETRIEVE_PATHS,
-        res: {
-          json: {
-            foo: 'baz',
-          },
-        },
-      };
-
-      const newState = falcorReducer(state, action);
-      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
-    });
-
-    it('ignores missing results', () => {
-      const state = {
-        foo: 'bar',
-        a: 'b',
-      };
-
-      const action = {
-        type: RETRIEVE_PATH,
-      };
-
-      const newState = falcorReducer(state, action);
-      expect(newState).toMatchObject({foo: 'bar', a: 'b'});
-    });
-  });
-
-  describe(CALL_PATH, () => {
-    it('merges the result properly into an inital state', () => {
-      const action = {
-        type: CALL_PATH,
-        res: {
-          json: {
-            foo: 'bar',
-          },
-        },
-      };
-
-      const newState = falcorReducer(undefined, action);
-      expect(newState).toMatchObject({foo: 'bar'});
-    });
-
-    it('merges the result properly into an existing state', () => {
-      const state = {
-        foo: 'bar',
-        a: 'b',
-      };
-
-      const action = {
-        type: CALL_PATH,
-        res: {
-          json: {
-            foo: 'baz',
-          },
-        },
-      };
-
-      const newState = falcorReducer(state, action);
-      expect(newState).toMatchObject({foo: 'baz', a: 'b'});
-    });
-
-    it('ignores missing results', () => {
-      const state = {
-        foo: 'bar',
-        a: 'b',
-      };
-
-      const action = {
-        type: RETRIEVE_PATH,
-      };
-
-      const newState = falcorReducer(state, action);
-      expect(newState).toMatchObject({foo: 'bar', a: 'b'});
+        expect(newState.foo).toEqual('bar');
+      });
     });
   });
 
