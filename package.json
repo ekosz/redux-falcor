@@ -34,7 +34,7 @@
   "homepage": "https://github.com/ekosz/redux-falcor#readme",
   "dependencies": {
     "deepmerge": "^0.2.10",
-    "falcor-expand-cache": "^0.0.2",
+    "falcor-expand-cache": "^0.0.3",
     "falcor-json-graph": "^2.0.0",
     "hoist-non-react-statics": "^1.0.3",
     "invariant": "^2.2.0",
