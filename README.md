@@ -53,7 +53,7 @@ store.subscribe(() =>
   console.log(store.getState())
 );
 
-store.dispatch(retrievePath('usersById[35]["email"]');
+store.dispatch(retrievePath('usersById[35]["email"]'));
 
 // This will logged:
 // {
