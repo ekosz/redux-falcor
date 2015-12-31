@@ -20,7 +20,7 @@ export default function createStore(reduxStore) {
     reduxStore.dispatch(update(cache));
 
     // Trigger listeners to refetch possible invalidated data
-    listeners.slice().forEach(listener => listener());
+    listeners.slice().forEach((listener) => listener());
     return cache;
   }
 
