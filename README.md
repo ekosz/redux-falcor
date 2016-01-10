@@ -118,7 +118,7 @@ component.
 **Warning**
 
 Because falcor is intrinsically asynchronous your code can not rely on any one
-piece of state being present when rending. In the example above we give
+piece of state being present when rendering. In the example above we give
 a default for `currentUser` when we haven't fetched that piece of data yet.
 
 ### Thanks
