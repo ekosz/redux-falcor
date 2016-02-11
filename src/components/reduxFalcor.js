@@ -6,8 +6,6 @@ function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }
 
-function noop() {}
-
 export default function reduxFalcor() {
 
   return function wrapWithFalcor (WrappedComponent) {
@@ -26,44 +24,9 @@ export default function reduxFalcor() {
         );
       }
 
-      componentDidMount() {
-        this.trySubscribe();
-      }
-
-      componentWillUnmount() {
-        this.tryUnsubscribe();
-      }
-
-      trySubscribe() {
-        if (!this.unsubscribe) {
-          this.unsubscribe = this.falcorStore.subscribe(::this.handleChange);
-          this.handleChange();
-        }
-      }
-
-      handleChange() {
-        const { wrappedInstance } = this.refs;
-
-        if (!this.unsubscribe) return;
-        if (!(typeof wrappedInstance.fetchFalcorDeps === 'function')) return;
-
-        wrappedInstance.fetchFalcorDeps().then(noop);
-      }
-
-      tryUnsubscribe() {
-        if (this.unsubscribe) {
-          this.unsubscribe();
-          this.unsubscribe = null;
-        }
-      }
-
       render() {
         return (
-          <WrappedComponent
-            {...this.props}
-            falcor={this.falcor}
-            ref="wrappedInstance"
-          />
+          <WrappedComponent {...this.props} falcor={this.falcor}/>
         );
       }
     }
@@ -73,12 +36,12 @@ export default function reduxFalcor() {
 
     ReduxFalcor.propTypes = {
       falcorStore: PropTypes.object,
-      falcor: PropTypes.object,
+      falcor: PropTypes.object
     };
 
     ReduxFalcor.contextTypes = {
       falcorStore: PropTypes.object.isRequired,
-      falcor: PropTypes.object.isRequired,
+      falcor: PropTypes.object.isRequired
     };
 
     return hoistStatics(ReduxFalcor, WrappedComponent);
