@@ -63,7 +63,8 @@ export default class FalcorProvider extends Component {
   }
 
   render() {
-    const { children } = this.props;
-    return Children.only(children);
+    let {children} = this.props
+    children = children()
+    return children
   }
 }
