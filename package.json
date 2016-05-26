@@ -42,7 +42,7 @@
   },
   "peerDependencies": {
     "falcor": "^0.1.13",
-    "react": "^0.14.0",
+    "react": "^0.14.0 || ^15.0.0",
     "redux": "^2.0.0 || ^3.0.0"
   },
   "devDependencies": {
