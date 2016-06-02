@@ -1,5 +1,4 @@
 import { Component, PropTypes, Children } from 'react';
-import expandCache from 'falcor-expand-cache';
 
 import createStore from './createStore';
 
@@ -20,7 +19,7 @@ function debounce(func, wait) {
 function attachOnChange(falcor, store) {
   // TODO: Throttle requests here
   const handler = debounce(() => {
-    store.trigger(expandCache(falcor.getCache()));
+    store.trigger(falcor.getCache());
   }, 50);
 
   const root = falcor._root;
