@@ -1,4 +1,4 @@
-import { update } from './duck';
+import { updateFalcorCache } from './duck';
 
 export default function createStore(reduxStore) {
   const listeners = [];
@@ -17,7 +17,7 @@ export default function createStore(reduxStore) {
 
   function trigger(cache) {
     // Update the redux with the changes
-    reduxStore.dispatch(update(cache));
+    reduxStore.dispatch(updateFalcorCache(cache));
 
     // Trigger listeners to refetch possible invalidated data
     listeners.slice().forEach((listener) => listener());

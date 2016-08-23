@@ -65,27 +65,21 @@ provided by `redux-falcor`. This should feel familiar to `react-redux`.
 ```js
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxFalcor } from 'redux-falcor';
+import { reduxFalcor, updateFalcorCache } from 'redux-falcor';
 import App from './App';
 
 class AppContainer extends Component {
-  fetchFalcorDeps() {
-    return this.props.falcor.get(
-      ['currentUser', App.queries.user()],
-    );
-  }
 
   handleClick(event) {
     event.preventDefault();
-
-    this.props.falcor.call(['some', 'path']).then(() => {
-      console.log('Some path called');
-    }).catch(() => {
-      console.error('Some path failed');
+    this.props.getData().catch(() => {
+      console.error('Some path failed')
     });
   }
 
   render() {
+    const { falcor } = this.props;
+    console.log(falcor.getCache());
     return (
       <App
         handleClick={this.handleClick.bind(this)}
@@ -100,27 +94,66 @@ function mapStateToProps(state) {
     currentUser: state.falcor.currentUser || {}
   };
 }
+function mapDispatchToProps(dispatch, props) {
+  return {
+    getData(){
+      const { falcor } = props;
+      return falcor.call(['some', 'path']).then(() => {
+        return dispatch(updateFalcorCache(falcor.getCache()));
+      });
+    }
+  };
+}
 
-export default connect(
-  mapStateToProps,
-)(reduxFalcor(AppContainer));
+export default reduxFalcor()(connect(mapStateToProps)(AppContainer));
+
+/**
+ * Example with decorators
+ */
+@reduxFalcor()
+@connect((state) => ({
+  currentUser: state.falcor.currentUser || {}
+}), (dispatch, props) => ({
+  getData(){
+    const { falcor } = props
+    return falcor.call(['some', 'path']).then(() => {
+      return dispatch(updateFalcorCache(falcor.getCache()));
+    });
+  }  
+})
+export default class AppContainer extends Component {
+
+  handleClick(event) {
+    event.preventDefault();
+    this.props.getData().catch(() => {
+      console.error('Some path failed')
+    });
+  }
+
+  render() {
+    const { falcor } = this.props;
+    console.log(falcor.getCache());
+    return (
+      <App
+        handleClick={this.handleClick.bind(this)}
+        currentUser={this.props.currentUser}
+      />
+    );
+  }
+}
 ```
 
-You can see `reduxFalcor` has done two things for us. First off, our falcor
-model has been provided to our Component via the `falcor` prop. This is useful
-for creating event handlers that call out to our `falcor-router`.
-
-Secondly, if we define the method `fetchFalcorDeps`, `redux-falcor` will
-automatically call that function when the component is first mounted to the DOM
-as well as whenever the falcor cache has been invalidated. This method should
-return a promise that fetches all of our falcor dependencies for this
-component.
+You can see `reduxFalcor` has provided our falcor model to the component via the `falcor` prop.
+This is useful for calling our `falcor-router` which provides the data to dispatch `updateFalcorCache` actions.
+Its values can then directly accessed from the falcor cache which keeps them in sync with the store.
 
 **Warning**
 
 Because falcor is intrinsically asynchronous your code can not rely on any one
 piece of state being present when rendering. In the example above we give
 a default for `currentUser` when we haven't fetched that piece of data yet.
+To solve this issue its best to load the data before and pass them as props.
+For example checkout [redial](https://github.com/markdalgleish/redial).
 
 ### Thanks
 

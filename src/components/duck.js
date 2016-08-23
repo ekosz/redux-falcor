@@ -9,9 +9,9 @@ export default function reduxFalcorReducer(state = {}, action) {
   }
 }
 
-export function update(falcorCache) {
+export function updateFalcorCache(falcorCache) {
   return {
     type: UPDATE,
-    payload: falcorCache,
+    payload: falcorCache
   };
 }
