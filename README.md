@@ -127,7 +127,7 @@ a default for `currentUser` when we haven't fetched that piece of data yet.
 This library was *heavy* influenced by @gaearon and his work on
 `react-redux`(https://github.com/rackt/react-redux). I would also like to thank
 @trxcllnt for helping solve some of the problems with earlier versions of
-`redux-falcor`. This library would not be as usefull as it is now without his
+`redux-falcor`. This library would not be as useful as it is now without his
 input.
 
 ### Licence
