@@ -1,8 +1,7 @@
 # Redux-Falcor
 
-redux-falcor helps connect your Redux applications to your Falcor API.
+Redux-Falcor connects Redux applications to the Falcor API.
 
-[![Maintainers Wanted](https://img.shields.io/badge/maintainers-wanted-red.svg?style=flat-square)](https://github.com/pickhardt/maintainers-wanted)
 [![build status](https://img.shields.io/travis/ekosz/redux-falcor/master.svg?style=flat-square)](https://travis-ci.org/ekosz/redux-falcor)
 [![npm version](https://img.shields.io/npm/v/redux-falcor.svg?style=flat-square)](https://www.npmjs.com/package/redux-falcor)
 
@@ -106,19 +105,19 @@ export default connect(
 )(reduxFalcor(AppContainer));
 ```
 
-You can see `reduxFalcor` has done two things for us. First off, our falcor
+You can see `reduxFalcor` has done two things for us. First off, our Falcor
 model has been provided to our Component via the `falcor` prop. This is useful
 for creating event handlers that call out to our `falcor-router`.
 
 Secondly, if we define the method `fetchFalcorDeps`, `redux-falcor` will
 automatically call that function when the component is first mounted to the DOM
-as well as whenever the falcor cache has been invalidated. This method should
-return a promise that fetches all of our falcor dependencies for this
+as well as whenever the Falcor cache has been invalidated. This method should
+return a promise that fetches all of our Falcor dependencies for this
 component.
 
 **Warning**
 
-Because falcor is intrinsically asynchronous your code can not rely on any one
+Because Falcor is intrinsically asynchronous, your code can not rely on any one
 piece of state being present when rendering. In the example above we give
 a default for `currentUser` when we haven't fetched that piece of data yet.
 
