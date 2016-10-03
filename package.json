@@ -62,7 +62,9 @@
     "falcor-router": "^0.2.9",
     "mocha": "^2.3.4",
     "react": "^0.14.3",
+    "react-addons-test-utils": "^0.14.3",
     "rimraf": "^2.4.3",
+    "sinon": "^1.17.6",
     "webpack": "^1.12.2"
   },
   "npmFileMap": [
