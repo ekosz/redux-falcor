@@ -3,12 +3,12 @@ import reduxFalcorReducer, { update } from '../src/components/duck.js';
 
 describe('duck', function() {
   describe('update', function() {
-    it('update action has the right type', function() {
+    it('has the right type', function() {
       const action = update();
       assert.equal('redux-falcor/UPDATE', action.type);
     });
   
-    it('update action has the payload', function() {
+    it('has the payload', function() {
       const cache = {
         name: 'Luke Skywalker',
         movie: 'Star Wars'
@@ -32,8 +32,8 @@ describe('duck', function() {
       });
     });
 
-    describe('Update action', function() {
-      it('Update action returns payload', function() {
+    describe('update action', function() {
+      it('returns payload', function() {
         const payload = {
           name: 'Luke Skywalker',
           movie: 'Star Wars'
