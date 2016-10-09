@@ -1,6 +1,6 @@
-# Redux-Falcor
+![Redux Falcor](static/logo.png "Redux Falcor")
 
-Redux-Falcor connects Redux applications to the Falcor API.
+Redux Falcor connects Redux applications to the Falcor API.
 
 [![build status](https://img.shields.io/travis/ekosz/redux-falcor/master.svg?style=flat-square)](https://travis-ci.org/ekosz/redux-falcor)
 [![npm version](https://img.shields.io/npm/v/redux-falcor.svg?style=flat-square)](https://www.npmjs.com/package/redux-falcor)
