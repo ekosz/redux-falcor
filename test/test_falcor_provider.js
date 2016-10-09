@@ -15,11 +15,6 @@ describe('FalcorProvider', function() {
       assert.throws(() => shallow(<FalcorProvider />));
     });
     
-    it('should have one child', function() {
-      const falcor = new Model({ cache });
-      assert.throws(() => shallow(<FalcorProvider falcor={falcor} />), /Invariant Violation:/);
-    });
-    
     it('requires redux store', function() {
       assert.throws(() => shallow(<FalcorProvider falcor={falcor}><App /></FalcorProvider>));
     });
