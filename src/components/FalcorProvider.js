@@ -52,6 +52,7 @@ export default class FalcorProvider extends Component {
     super(props, context);
     this.falcor = props.falcor;
     this.falcorStore = createStore(props.store);
+    this.falcorStore.trigger(expandCache(this.falcor.getCache()));
     attachOnChange(props.falcor, this.falcorStore);
   }
 
