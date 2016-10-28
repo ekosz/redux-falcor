@@ -8,7 +8,15 @@ function getDisplayName(WrappedComponent) {
 
 function noop() {}
 
-export default function reduxFalcor(WrappedComponent) {
+/**
+ * Represents a book.
+ * @param {React.Component} WrappedComponent - your component.
+ * @param {function} [fetchFalcorDeps] - an optional function to fetch Falcor
+ *   dependencies. This method should return a promise that fetches all
+ *   Falcor dependencies for your component. If not present, uses 
+ *   the wrappedComponent.fetchFalcorDeps
+ */
+export default function reduxFalcor(WrappedComponent, fetchFalcorDeps) {
   class ReduxFalcor extends Component {
     constructor(props, context) {
       super(props, context);
@@ -41,11 +49,14 @@ export default function reduxFalcor(WrappedComponent) {
 
     handleChange() {
       const { wrappedInstance } = this.refs;
+      let fetchFalcorDeps = fetchFalcorDeps || wrappedInstance.fetchFalcorDeps;
 
-      if (!this.unsubscribe) return;
-      if (!(typeof wrappedInstance.fetchFalcorDeps === 'function')) return;
+      if (!this.unsubscribe ||
+        typeof fetchFalcorDeps !== 'function') {
+        return;
+      };
 
-      wrappedInstance.fetchFalcorDeps().then(noop);
+      fetchFalcorDeps().then(noop);
     }
 
     tryUnsubscribe() {
@@ -68,6 +79,7 @@ export default function reduxFalcor(WrappedComponent) {
 
   ReduxFalcor.displayName = `ReduxFalcor(${getDisplayName(WrappedComponent)})`;
   ReduxFalcor.WrappedComponent = WrappedComponent;
+  ReduxFalcor.fetchFalcorDeps = fetchFalcorDeps;
 
   ReduxFalcor.propTypes = {
     falcorStore: PropTypes.object,
