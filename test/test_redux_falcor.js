@@ -49,7 +49,7 @@ describe('reduxFalcor', function() {
     it('reduxFalcor element is rendered', function() {
       const element = React.createElement(wrapper, { falcorStore: {}, falcor: {} });
       const node = shallow(element);
-      assert.ok(node.some('App'));
+      assert.ok(node.exists('App'));
     });
     
     it('reduxFalcor element has falcor prop', function() {
