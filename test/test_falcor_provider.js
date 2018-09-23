@@ -39,7 +39,7 @@ describe('FalcorProvider', function() {
     });
     
     it('renders child', function() {
-      assert.ok(wrapper.some('App'));
+      assert.ok(wrapper.exists('App'));
     });
     
     it('gets the falcor model', function(done) {
